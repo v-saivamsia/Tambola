@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,12 +9,16 @@ namespace Tambola.Services
 {
     public class TicketManager
     {
+        private readonly ILogger<TicketManager> logger;
+
         public Ticket[] Tickets { get; }
-        public TicketManager()
+        public TicketManager(ILogger<TicketManager> logger)
         {
             Tickets = new Ticket[6];
             for (int i = 0; i < 6; i++)
                 Tickets[i] = new Ticket();
+            this.logger = logger;
+            generateTickets();
         }
         public void generateTickets()
         {
@@ -42,17 +47,41 @@ namespace Tambola.Services
             for (int i = 0; i < 6; i++)
             {
                 shuffleList(rowIndices);
-                int col = 0;
-                for (int j = 0; j < 3; j++)
+                int rowPointer = -1, count = 0;
+                foreach (int j in rowIndices)
                 {
-                    for (int k = 0; k < 3; k++)
-                    {
-                        Tickets[i].TicketArray[j, rowIndices[col]] = nums[col][nums[col].Count - 1]; 
-                    }
+                    if (count % 3 == 0) rowPointer++;
+                    int fill = nums[j][nums[j].Count - 1];
+                    Tickets[i].TicketArray[rowPointer, j] = fill;
+                    Tickets[i].TicketSet[rowPointer] |= 1 << j;
+                    Tickets[i].AvailableIndices[rowPointer].Remove(j);
+                    nums[j].RemoveAt(nums[j].Count - 1);
+                    count++;
                 }
             }
+            bool isPossible = false;
+
+            // Add the remaining 36 numbers to the tickets
+            // Since there are many possible combinations backtrack for the solution
+
+
         }
 
+        // backtrack for the solution
+        private bool backTrack(int ticketNumber, List<List<int>> nums, List<int> numsSet)
+        {
+            Random random = new Random();
+            bool isValidNumbers = false;
+            while (!isValidNumbers)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+
+                }
+            }
+
+            return false;
+        }
         // shuffle array in O(n) time
         private void shuffleList(List<int> list)
         {
@@ -65,6 +94,23 @@ namespace Tambola.Services
                 list[i] = list[temp];
                 list[temp] = swap;
             }
+        }
+        private void printArray()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 9; k++)
+                    {
+                        Console.Write($"{Tickets[i].TicketArray[j, k]} ");
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
         }
     }
 }

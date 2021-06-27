@@ -24,6 +24,7 @@ namespace Tambola.Services
                 {
                     generateTickets();
                     isValidTickets = true;
+
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +61,16 @@ namespace Tambola.Services
                 // shuffle the list
                 shuffleList(nums[i]);
             }
+            // add the 9 numbers to all tickets
+            addNineNums(nums,numsSet);
+            
+            // Add the remaining 36 numbers to the tickets
+            addTwoNums(nums, numsSet);
+        }
+
+        // add 9 numbers in each ticket with each row containing 3 numbers
+        private void addNineNums(List<List<int>> nums,List<int> numsSet)
+        {
             // Fill all tickets with atleast one number in each column
             // i.e fill each row with 3 numbers and all rows are disjoint
             List<int> rowIndices = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -78,8 +89,6 @@ namespace Tambola.Services
                 }
             }
 
-            // Add the remaining 36 numbers to the tickets
-            addTwoNums(nums, numsSet);
         }
 
         // add the remaining two numbers in each row

@@ -52,7 +52,6 @@ namespace Tambola.Services
                     int fill = nums[j][nums[j].Count - 1];
                     Tickets[i].TicketArray[rowPointer, j] = fill;
                     Tickets[i].TicketSet[rowPointer] ^= 1 << j;
-                    Tickets[i].AvailableIndices[rowPointer].Remove(j);
                     nums[j].RemoveAt(nums[j].Count - 1);
                     count++;
                 }

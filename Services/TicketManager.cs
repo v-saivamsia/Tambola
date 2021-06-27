@@ -9,7 +9,6 @@ namespace Tambola.Services
 {
     public class TicketManager
     {
-        // adding something
 
         public Ticket[] Tickets { get; }
         public TicketManager()
@@ -40,9 +39,6 @@ namespace Tambola.Services
                     Console.WriteLine($"Number of attempts: {count}");
                 }
             }
-        }
-        private void constructTickets()
-        {
         }
         private void generateTickets()
         {

@@ -4,7 +4,6 @@
 	box-sizing: border-box;
 }
 .cell{
-	background-color: greenyellow;
 	display:inline-flex;
 	height: 45px;
 	width: 45px;

@@ -15,9 +15,9 @@ namespace Tambola.Models
         public Ticket()
         {
             TicketArray = new int[3, 9];
-            int twopowten = 1 << 9;
-            twopowten--;
-            TicketSet = new int[3] {twopowten,twopowten,twopowten };
+            int twopownine = 1 << 9;
+            twopownine--;
+            TicketSet = new int[3] {twopownine,twopownine,twopownine };
             AvailableIndices = new List<List<int>>();
             for(int i = 0;i < 3; i++)
             {

@@ -1,0 +1,13 @@
+﻿<div class="cell">
+    @if (number.HasValue)
+    {
+        <span>@number</span>
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public int? number { get; set; }
+
+}

@@ -17,9 +17,34 @@ namespace Tambola.Services
             Tickets = new Ticket[6];
             for (int i = 0; i < 6; i++)
                 Tickets[i] = new Ticket();
-            generateTickets();
+            bool isValidTickets = false;
+            int count = 1;
+            while (!isValidTickets)
+            {
+                try
+                {
+                    generateTickets();
+                    isValidTickets = true;
+                }
+                catch (Exception ex)
+                {
+                    Tickets = new Ticket[6];
+                    for (int i = 0; i < 6; i++)
+                        Tickets[i] = new Ticket();
+
+                    Console.WriteLine($"Failed at attempt: {count} and the exception is:\n {ex}");
+                    count++;
+                }
+                finally
+                {
+                    Console.WriteLine($"Number of attempts: {count}");
+                }
+            }
         }
-        public void generateTickets()
+        private void constructTickets()
+        {
+        }
+        private void generateTickets()
         {
             // List of all 90 numbers
             List<List<int>> nums = new List<List<int>>();
@@ -84,7 +109,7 @@ namespace Tambola.Services
                         availableIndices.Add(count);
                         availableBits -= availableBits & -availableBits;
                     }
-                    specialShuffle(nums,availableIndices);
+                    specialShuffle(nums, availableIndices);
                     int a = availableIndices[0], b = availableIndices[1];
                     Tickets[i].TicketArray[j, a] = nums[a][nums[a].Count - 1];
                     Tickets[i].TicketArray[j, b] = nums[b][nums[b].Count - 1];
@@ -98,7 +123,7 @@ namespace Tambola.Services
         }
         private void shuffleList(List<int> list)
         {
-            shuffleListWithIndex(list,0, list.Count-1); 
+            shuffleListWithIndex(list, 0, list.Count - 1);
         }
         private void shuffleListWithIndex(List<int> list, int a, int b)
         {
@@ -122,31 +147,14 @@ namespace Tambola.Services
         private void specialShuffle(List<List<int>> nums, List<int> list)
         {
             list.Sort((a, b) => nums[b].Count - nums[a].Count);
-            int i=0,j=0;
-            for(; i< list.Count; i++)
+            int i = 0, j = 0;
+            for (; i < list.Count; i++)
             {
                 if (nums[i].Count == nums[j].Count) continue;
                 shuffleListWithIndex(list, j, i - 1);
                 j = i;
             }
             shuffleListWithIndex(list, j, i - 1);
-
-        }
-        private void printArray()
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    for (int k = 0; k < 9; k++)
-                    {
-                        Console.Write($"{Tickets[i].TicketArray[j, k]} ");
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
-                Console.WriteLine();
-            }
 
         }
     }

@@ -1,0 +1,10 @@
+﻿body {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+.ticket{
+	display:grid;
+	grid-template-columns: repeat(9,45px);
+	margin-bottom: 90px;
+}

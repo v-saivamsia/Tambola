@@ -8,12 +8,12 @@ namespace Tambola.Models
 {
     public class Ticket
     {
-        public int[,] TicketArray { get; }
+        public int?[,] TicketArray { get; }
         public int[] TicketSet { get; }
 
         public Ticket()
         {
-            TicketArray = new int[3, 9];
+            TicketArray = new int?[3, 9];
             int twopownine = 1 << 9;
             twopownine--;
             TicketSet = new int[3] {twopownine,twopownine,twopownine };

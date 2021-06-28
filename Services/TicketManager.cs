@@ -24,6 +24,15 @@ namespace Tambola.Services
                 {
                     generateTickets();
                     isValidTickets = true;
+
+                    // flip all the ticket rows
+                    for (int i = 0; i < 6; i++)
+                        for (int j = 0; j < 3; j++)
+                            flipTicketRow(i, j);
+
+                    // permute all the ticket rows
+                    permuteTickets();
+
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +69,16 @@ namespace Tambola.Services
                 // shuffle the list
                 shuffleList(nums[i]);
             }
+            // add the 9 numbers to all tickets
+            addNineNums(nums, numsSet);
+
+            // Add the remaining 36 numbers to the tickets
+            addTwoNums(nums, numsSet);
+        }
+
+        // add 9 numbers in each ticket with each row containing 3 numbers
+        private void addNineNums(List<List<int>> nums, List<int> numsSet)
+        {
             // Fill all tickets with atleast one number in each column
             // i.e fill each row with 3 numbers and all rows are disjoint
             List<int> rowIndices = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -78,8 +97,6 @@ namespace Tambola.Services
                 }
             }
 
-            // Add the remaining 36 numbers to the tickets
-            addTwoNums(nums, numsSet);
         }
 
         // add the remaining two numbers in each row
@@ -92,23 +109,17 @@ namespace Tambola.Services
                 for (int j = 0; j < 3; j++)
                 {
                     int availableBits = num & Tickets[i].TicketSet[j];
-                    List<int> availableIndices = new List<int>();
-                    while (availableBits > 0)
-                    {
-                        int lsb = availableBits & -availableBits;
-                        int count = 0;
-                        while (lsb != 1)
-                        {
-                            count++;
-                            lsb = lsb >> 1;
-                        }
-                        availableIndices.Add(count);
-                        availableBits -= availableBits & -availableBits;
-                    }
+                    List<int> availableIndices = getAvailableIndices(availableBits);
+
                     specialShuffle(nums, availableIndices);
                     int a = availableIndices[0], b = availableIndices[1];
+                    
                     Tickets[i].TicketArray[j, a] = nums[a][nums[a].Count - 1];
+                    Tickets[i].TicketSet[j] ^= 1 << a;
+                    
                     Tickets[i].TicketArray[j, b] = nums[b][nums[b].Count - 1];
+                    Tickets[i].TicketSet[j] ^= 1 << b;
+                    
                     nums[a].RemoveAt(nums[a].Count - 1);
                     if (nums[a].Count == 0) num ^= 1 << a;
                     nums[b].RemoveAt(nums[b].Count - 1);
@@ -116,6 +127,105 @@ namespace Tambola.Services
 
                 }
             }
+        }
+        private void permuteTickets()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                premuteTicket(i);
+            }
+        }
+
+        private void premuteTicket(int ticketNumber)
+        {
+            for (int i = 0; i<3; i++)
+            {
+                if (checkContinuity(ticketNumber, i))
+                {
+                    shuffleTicket(ticketNumber, i);
+                }
+            }
+
+        }
+        private void shuffleTicket(int ticketNumber, int row)
+        {
+            swapWithRow(ticketNumber, row, (row+2)%3);
+            swapWithRow(ticketNumber, row, (row+1)%3);
+        }
+        private void swapWithRow(int ticketNumber, int row, int swapRow)
+        {
+            int possibleSwaps = Tickets[ticketNumber].TicketSet[row] ^ Tickets[ticketNumber].TicketSet[swapRow];
+            int possibleSwapsinOne = possibleSwaps & Tickets[ticketNumber].TicketSet[row];
+            int possibleSwapsinTwo = possibleSwaps & Tickets[ticketNumber].TicketSet[swapRow];
+
+            List<int> availableSwapsinOne = getAvailableIndices(possibleSwapsinOne);
+            List<int> availableSwapsinTwo = getAvailableIndices(possibleSwapsinTwo);
+
+            shuffleList(availableSwapsinOne);
+            shuffleList(availableSwapsinTwo);
+
+            for (int i = 0; i < Math.Min(availableSwapsinOne.Count, availableSwapsinTwo.Count); i++)
+            {
+                swap(ticketNumber, row, swapRow, availableSwapsinOne[i], availableSwapsinTwo[i]);
+            }
+
+        }
+        private void swap(int ticketNumber, int a, int b, int cola, int colb)
+        {
+            int tempa = (int)Tickets[ticketNumber].TicketArray[a, cola];
+            int tempb = (int)Tickets[ticketNumber].TicketArray[b, colb];
+
+            Tickets[ticketNumber].TicketArray[a, cola] = null;
+            Tickets[ticketNumber].TicketSet[a] ^= 1 << cola;
+
+            Tickets[ticketNumber].TicketArray[b, cola] = tempa;
+            Tickets[ticketNumber].TicketSet[b] ^= 1 << cola;
+
+
+            Tickets[ticketNumber].TicketArray[b, colb] = null;
+            Tickets[ticketNumber].TicketSet[b] ^= 1 << colb;
+
+
+            Tickets[ticketNumber].TicketArray[a, colb] = tempb;
+            Tickets[ticketNumber].TicketSet[a] ^= 1 << colb;
+        }
+        private void flipTicketRow(int ticketNumber, int row)
+        {
+            int mask = (1 << 9) - 1;
+            Tickets[ticketNumber].TicketSet[row] = (~Tickets[ticketNumber].TicketSet[row]) & mask;
+        }
+        private bool checkContinuity(int ticketNumber, int row)
+        {
+            int maxCount = 0;
+            for (int i = 0, count = 0; i < 9; i++)
+            {
+                if (!Tickets[ticketNumber].TicketArray[row, i].HasValue)
+                {
+                    count = 0;
+                    continue;
+                }
+                count++;
+                maxCount = count > maxCount ? count : maxCount;
+            }
+            return maxCount >= 4;
+        }
+
+        private List<int> getAvailableIndices(int availableBits)
+        {
+            List<int> availableIndices = new List<int>();
+            while (availableBits > 0)
+            {
+                int lsb = availableBits & -availableBits;
+                int count = 0;
+                while (lsb != 1)
+                {
+                    count++;
+                    lsb = lsb >> 1;
+                }
+                availableIndices.Add(count);
+                availableBits -= availableBits & -availableBits;
+            }
+            return availableIndices;
         }
         private void shuffleList(List<int> list)
         {

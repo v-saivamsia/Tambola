@@ -138,11 +138,11 @@ namespace Tambola.Services
 
         private void premuteTicket(int ticketNumber)
         {
-            for (int i = 0; i<3; i++)
+            for (int i = 0; i<6; i++)
             {
-                if (checkContinuity(ticketNumber, i))
+                if (checkContinuity(ticketNumber, i%3))
                 {
-                    shuffleTicket(ticketNumber, i);
+                    shuffleTicket(ticketNumber, i%3);
                 }
             }
 

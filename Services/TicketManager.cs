@@ -113,13 +113,13 @@ namespace Tambola.Services
 
                     specialShuffle(nums, availableIndices);
                     int a = availableIndices[0], b = availableIndices[1];
-                    
+
                     Tickets[i].TicketArray[j, a] = nums[a][nums[a].Count - 1];
                     Tickets[i].TicketSet[j] ^= 1 << a;
-                    
+
                     Tickets[i].TicketArray[j, b] = nums[b][nums[b].Count - 1];
                     Tickets[i].TicketSet[j] ^= 1 << b;
-                    
+
                     nums[a].RemoveAt(nums[a].Count - 1);
                     if (nums[a].Count == 0) num ^= 1 << a;
                     nums[b].RemoveAt(nums[b].Count - 1);
@@ -138,37 +138,51 @@ namespace Tambola.Services
 
         private void premuteTicket(int ticketNumber)
         {
-            for (int i = 0; i<3; i++)
+            bool isPermutedWell = false;
+            int count = 0;
+            while (!isPermutedWell && count<5)
             {
-                if (checkContinuity(ticketNumber, i))
+                for (int i = 0; i < 3; i++)
                 {
-                    shuffleTicket(ticketNumber, i);
+                    if (checkContinuity(ticketNumber, i % 3))
+                    {
+                        shuffleTicket(ticketNumber, i % 3);
+                    }
                 }
+                isPermutedWell = !(checkContinuity(ticketNumber,0) || checkContinuity(ticketNumber,1) || checkContinuity(ticketNumber,2));
+                count++;
             }
 
         }
         private void shuffleTicket(int ticketNumber, int row)
         {
-            swapWithRow(ticketNumber, row, (row+2)%3);
-            swapWithRow(ticketNumber, row, (row+1)%3);
+            if (!swapWithRow(ticketNumber, row, (row + 1) % 3))
+                swapWithRow(ticketNumber, row, (row + 2) % 3);
         }
-        private void swapWithRow(int ticketNumber, int row, int swapRow)
+        private bool swapWithRow(int ticketNumber, int row, int swapRow)
         {
-            int possibleSwaps = Tickets[ticketNumber].TicketSet[row] ^ Tickets[ticketNumber].TicketSet[swapRow];
-            int possibleSwapsinOne = possibleSwaps & Tickets[ticketNumber].TicketSet[row];
-            int possibleSwapsinTwo = possibleSwaps & Tickets[ticketNumber].TicketSet[swapRow];
+            int possibleSwapsinBoth = Tickets[ticketNumber].TicketSet[row] ^ Tickets[ticketNumber].TicketSet[swapRow];
+            int possibleSwapsinOne = possibleSwapsinBoth & Tickets[ticketNumber].TicketSet[row];
+            int possibleSwapsinTwo = possibleSwapsinBoth & Tickets[ticketNumber].TicketSet[swapRow];
 
-            List<int> availableSwapsinOne = getAvailableIndices(possibleSwapsinOne);
+            List<int> availableSwapsinOne = getAvailableIndices(getOnlyContinuousIndices(possibleSwapsinOne, ticketNumber, row));
             List<int> availableSwapsinTwo = getAvailableIndices(possibleSwapsinTwo);
 
             shuffleList(availableSwapsinOne);
             shuffleList(availableSwapsinTwo);
-
-            for (int i = 0; i < Math.Min(availableSwapsinOne.Count, availableSwapsinTwo.Count); i++)
+            bool isPermuted = false;
+            for (int index = 0; availableSwapsinOne.Count > 0 && availableSwapsinTwo.Count > 0 && !isPermuted && index < availableSwapsinTwo.Count; index++)
             {
-                swap(ticketNumber, row, swapRow, availableSwapsinOne[i], availableSwapsinTwo[i]);
+                swap(ticketNumber, row, swapRow, availableSwapsinOne[0], availableSwapsinTwo[index]);
+                if (!checkContinuity(ticketNumber, swapRow))
+                {
+                    isPermuted = true;
+                    break;
+                }
+                swap(ticketNumber, swapRow, row, availableSwapsinOne[0], availableSwapsinTwo[index]);
             }
 
+            return isPermuted;
         }
         private void swap(int ticketNumber, int a, int b, int cola, int colb)
         {
@@ -193,6 +207,18 @@ namespace Tambola.Services
         {
             int mask = (1 << 9) - 1;
             Tickets[ticketNumber].TicketSet[row] = (~Tickets[ticketNumber].TicketSet[row]) & mask;
+        }
+        private int getOnlyContinuousIndices(int possibleSwaps, int ticketNumber, int row)
+        {
+            int temp = possibleSwaps, lsb = 0;
+            while (temp > 0)
+            {
+                lsb = temp & -temp;
+                if ((possibleSwaps & (lsb >> 1)) == 0 && (possibleSwaps & (lsb << 1)) == 0)
+                    possibleSwaps -= lsb;
+                temp -= lsb;
+            }
+            return possibleSwaps;
         }
         private bool checkContinuity(int ticketNumber, int row)
         {

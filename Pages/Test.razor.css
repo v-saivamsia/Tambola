@@ -1,0 +1,19 @@
+﻿.btnPrimary{
+    box-sizing:border-box;
+    padding:1em;
+    text-align:center;
+    background:#0756eb;
+    border-radius:5px;
+    max-height:30px;
+    border-color:transparent;
+    box-shadow:#726f6f 0px 3px 3px -3px;
+    color:white;
+    transition: transform 300ms, box-shadow 300ms;
+}
+.btnPrimary:active{
+    transform:scale(1.1);
+    box-shadow:#726f6f 0px 3px 5px -2px;
+}
+.navBar{
+    background:orange;
+}

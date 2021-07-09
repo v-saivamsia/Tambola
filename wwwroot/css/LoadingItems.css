@@ -1,0 +1,23 @@
+﻿.normalLoadingSpinner {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius:50%;
+    border:5px solid transparent;
+    border-top:5px solid #6c6c6c;
+    border-right:5px solid #6c6c6c;
+    animation-name: spin;
+    animation-duration:600ms;
+    animation-timing-function:linear;
+    animation-delay:0ms;
+    animation-iteration-count:infinite;
+}
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}

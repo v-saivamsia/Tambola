@@ -7,12 +7,19 @@
     <title>Tambola</title>
     <!--<base href="/" />-->
     <link href="css/app.css" rel="stylesheet" />
+    <link href="css/LoadingItems.css" rel="stylesheet" />
     <link href="Tambola.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div style="display:flex;width:100vw;height:100vh">
+            <div style="margin:auto">
+                Loading...  <div class="normalLoadingSpinner" style="position:relative;top:7.5px;"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

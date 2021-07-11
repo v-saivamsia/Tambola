@@ -1,13 +1,12 @@
 ﻿@using Tambola.Services
 @page "/"
-<h3>Test</h3>
 
+<AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked"></AddPlayer>
 
-<DisplayTickets NumberOfTickets=6></DisplayTickets>
-<nav class="navBar">
-    <a href="#">Hiii</a>
-    <ul>
-        <li><a href="#">this is a anchor tag</a></li>
-    </ul>
-</nav>
-<button class="btnPrimary" @onclick="btnClicked">Add player</button>
+<div class="navBar">
+    <span style="margin-left:30px;font-size:large;"><b>Tambola</b></span>    
+    <div style="margin-right:30px;">
+    <button class="button button-primary" @onclick="btnClicked">Add player</button> 
+    </div>
+</div>
+

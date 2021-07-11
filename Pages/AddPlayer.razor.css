@@ -1,0 +1,22 @@
+﻿.addPlayer{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    z-index:0;
+}
+.showPanel{
+    z-index:1;
+}
+.addPlayerNavColor{
+    background:#f8f7f7;
+}
+.emptyLeft{
+    height:100%;
+    width:60%;
+}
+.ticketGenerator{
+    height:100%;
+    width:40%;
+    background:#f8f7f7;
+}

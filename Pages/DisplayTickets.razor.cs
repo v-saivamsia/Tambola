@@ -12,6 +12,17 @@ namespace Tambola.Pages
         [Parameter]
         public int NumberOfTickets { get; set; } = 1;
         [Inject]
-        private TicketManager ticketManager { get; set; }
+        private TicketFactory ticketFactory { get; set; }
+        private TicketManager ticketManager;
+        public void setTicketManager()
+        {
+            ticketManager = ticketFactory.ticketManager;
+            StateHasChanged();
+        }
+        protected override void OnInitialized()
+        {
+            setTicketManager();
+            base.OnInitialized();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +18,13 @@ namespace Tambola
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-            // custom services
-            builder.Services.AddTransient<TicketManager>();
-
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            // custom services
+            builder.Services.AddTransient<TicketFactory>();
+
+            // third party services
+            builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
         }

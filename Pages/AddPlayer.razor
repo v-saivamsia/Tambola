@@ -1,11 +1,55 @@
-﻿<div class=@($"addPlayer {showPanel}")>
+﻿@using Tambola.Models
+<div class=@($"addPlayer {showPanel}")>
     <div class="emptyLeft"></div>
     <div class="ticketGenerator">
         <div class="navBar justify-content-right addPlayerNavColor">
-            <button class="button" @onclick="closeTicketsPanel" >Close X</button>
+            <button class="button add-player-btn-fullsize" @onclick="closeTicketsPanel">Close X</button>
         </div>
         <div class="content">
-            hi hello namasthe
+            <h3>Player Details</h3>
+            <EditForm Model="@player" OnValidSubmit="@GenerateTickets">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <p>
+                    <label>
+                        <div class="form-grid">
+                            Enter name of the player:
+                            <InputText id="name" @bind-Value="@player.Name"></InputText>
+                        </div>
+                    </label>
+                    <ValidationMessage For="() => player.Name"></ValidationMessage>
+                </p>
+                <p>
+                    <label>
+                        <div class="form-grid">
+                            Enter the number of tickets:
+                            <InputSelect @bind-Value="@player.NumberOfTickets" placeholder="1">
+                                @foreach (int number in Enum.GetValues(typeof(SelectNumberOfTickets)))
+                                {
+                                    <option value="@number">@number</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </label>
+                    <ValidationMessage For="() => player.NumberOfTickets"></ValidationMessage>
+                </p>
+                <div class="form-buttons display-flex justify-content-around">
+                    <button type="reset" class="button button-primary" @onclick="reset">Reset</button>
+                    @if (!showAllTickets)
+                    {
+                        <button type="submit" class="button button-primary">Generate Tickets</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="button button-primary" @onclick="regenerateTickets">Regenerate Tickets</button>
+                    }
+                </div>
+            </EditForm>
+            <p></p>
+            @if (showAllTickets)
+            {
+                <button type="button" class="button saveTicketsButton">Save Player Tickets</button>
+                <DisplayTickets @ref="@displayTickets" NumberOfTickets="@player.NumberOfTickets"></DisplayTickets>
+            }
         </div>
     </div>
 </div>

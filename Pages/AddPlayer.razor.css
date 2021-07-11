@@ -15,8 +15,35 @@
     height:100%;
     width:60%;
 }
+.content{
+    padding-left:20px;
+    padding-right:20px;
+}
 .ticketGenerator{
     height:100%;
     width:40%;
     background:#f8f7f7;
+}
+.add-player-btn-fullsize{
+    color:black;
+    height:100%;
+    border-radius:0;
+    box-shadow:none;
+    padding: 0 20px;
+}
+.add-player-btn-fullsize:hover{
+    background:hsl(0 100% 50%);
+    color:white;
+}
+.form-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+.form-buttons > button{
+    width:150px;
+}
+.saveTicketsButton{
+    display:block;
+    width:100%;
+    background-color:forestgreen;
 }

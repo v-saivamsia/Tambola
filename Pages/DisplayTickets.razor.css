@@ -6,5 +6,7 @@
 .ticket{
 	display:grid;
 	grid-template-columns: repeat(9,45px);
+	margin:auto;
 	margin-bottom: 90px;
+	width:fit-content;
 }

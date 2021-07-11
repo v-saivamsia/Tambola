@@ -101,9 +101,24 @@ position-absolute{
     align-items:center;
     justify-content:space-between
 }
+.display-flex{
+    display:flex;
+}
+.display-block{
+    display:block;
+}
+.justify-content-center{
+    justify-content:center;
+}
+.justify-content-around{
+    justify-content:space-around;
+}
 .justify-content-right{
     justify-content:flex-end;
 }
 .justify-content-left{
     justify-content:flex-start;
+}
+.margin-auto{
+    margin:auto;
 }

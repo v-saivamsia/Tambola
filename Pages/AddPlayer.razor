@@ -1,9 +1,9 @@
 ﻿@using Tambola.Models
 <div class=@($"addPlayer {showPanel}")>
-    <div class="emptyLeft"></div>
+    <div class="emptyLeft" @onclick="closeTicketsPanel"></div>
     <div class="ticketGenerator">
         <div class="navBar justify-content-right addPlayerNavColor">
-            <button class="button add-player-btn-fullsize" @onclick="closeTicketsPanel">Close X</button>
+            <button class="button add-player-btn-fullsize" @onclick="closeTicketsPanel">Close</button>
         </div>
         <div class="content">
             <h3>Player Details</h3>
@@ -47,7 +47,7 @@
             <p></p>
             @if (showAllTickets)
             {
-                <button type="button" class="button saveTicketsButton">Save Player Tickets</button>
+                <button type="button" class="button saveTicketsButton" @onclick="saveTickets">Save Player Tickets</button>
                 <DisplayTickets @ref="@displayTickets" NumberOfTickets="@player.NumberOfTickets"></DisplayTickets>
             }
         </div>

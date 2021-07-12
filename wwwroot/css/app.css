@@ -3,6 +3,7 @@
 :root {
     --btn-color: transparent;
     --color: white;
+    --nav-bar-height:60px;
 }
 
 html, body {

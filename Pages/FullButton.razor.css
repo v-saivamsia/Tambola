@@ -1,0 +1,24 @@
+﻿div{
+    width:100%;
+}
+.button{
+    width:100%;
+    border-radius:0;
+    box-shadow:none;
+    color:inherit;
+    text-align:left;
+    padding-left:25px;
+}
+.button:hover{
+    background-color:#0769cf;
+    color:white;
+}
+
+.clear-data{
+    margin-top:auto;
+}
+div.clear-data > button:hover{
+    background-color:#d1061f;
+    color:white;
+}
+

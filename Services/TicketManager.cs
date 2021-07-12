@@ -49,6 +49,14 @@ namespace Tambola.Services
                 }
             }
         }
+
+        public static implicit operator List<string> (TicketManager ticketManager)
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < 6; i++) result.Add(ticketManager.Tickets[i]);
+            return result;
+        }
+
         private void generateTickets()
         {
             // List of all 90 numbers

@@ -44,7 +44,12 @@ namespace Tambola.Pages
         {
             displayTickets.setTicketManager();
         }
-
+        private void saveTickets()
+        {
+            displayTickets.saveTickets(player.Name);
+            // display pop up saved tickets of the player
+            reset();
+        }
     }
 }
 

@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using Tambola.Services;
+using Tambola.Models;
 
 namespace Tambola.Pages
 {
@@ -11,6 +13,9 @@ namespace Tambola.Pages
     {
         [Parameter]
         public int NumberOfTickets { get; set; } = 1;
+        [Inject]
+        private ILocalStorageService localStorage { get; set; }
+
         [Inject]
         private TicketFactory ticketFactory { get; set; }
         private TicketManager ticketManager;
@@ -23,6 +28,15 @@ namespace Tambola.Pages
         {
             setTicketManager();
             base.OnInitialized();
+        }
+        public void saveTickets(string name)
+        {
+            PlayerTicket playerTicket = new PlayerTicket()
+            {
+                numberOftickets = NumberOfTickets,
+                tickets = ticketManager
+            };
+            localStorage.SetItemAsync<PlayerTicket>(name,playerTicket);
         }
     }
 }

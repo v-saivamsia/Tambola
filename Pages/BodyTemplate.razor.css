@@ -1,0 +1,9 @@
+﻿.container{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:250px auto;
+    grid-template-rows:auto;
+}
+.sidebody{
+}

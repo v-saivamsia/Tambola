@@ -10,3 +10,7 @@
 	margin-bottom: 90px;
 	width:fit-content;
 }
+.overflow-scroll{
+	overflow:scroll;
+	height:250px;
+}

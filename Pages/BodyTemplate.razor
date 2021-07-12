@@ -1,0 +1,10 @@
+﻿<div class="container">
+    <div class="sidebar">@sideBody</div>
+    <div class="mainbody">@mainBody</div>
+</div>
+@code {
+    [Parameter]
+    public RenderFragment sideBody{ get; set; }
+    [Parameter]
+    public RenderFragment mainBody{ get; set; }
+}

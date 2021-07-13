@@ -21,6 +21,7 @@ namespace Tambola.Pages
 
         [Inject]
         private TicketFactory ticketFactory { get; set; }
+        public PlayerTicket playerTicket { get; set; } 
         private TicketManager ticketManager;
         public void setTicketManager()
         {
@@ -34,7 +35,7 @@ namespace Tambola.Pages
         }
         public void saveTickets(string name)
         {
-            PlayerTicket playerTicket = new PlayerTicket()
+            playerTicket = new PlayerTicket()
             {
                 numberOftickets = NumberOfTickets,
                 tickets = ticketManager

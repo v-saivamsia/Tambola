@@ -18,5 +18,10 @@ namespace Tambola.Models
             numberOftickets = playerTicket.numberOftickets;
             tickets = new List<string>(playerTicket.tickets);
         }
+        public PlayerTicket(int num,List<string> list)
+        {
+            numberOftickets = num;
+            tickets = new List<string>(list);
+        }
     }
 }

@@ -28,11 +28,9 @@ namespace Tambola.Pages
             displayTickets.setTicketManagerExternal(playerTickets[name]);
             StateHasChanged();
         }
-        public async Task statechanged()
+        public void statechanged(Tuple<string,PlayerTicket> tuple)
         {
-            await getPlayerNames();
-            await OnParametersSetAsync();
-            StateHasChanged();
+            AddPlayer(tuple.Item1,tuple.Item2);
             _bodyTemplate.statechanged();
         }
         private async Task getPlayerNames()
@@ -46,6 +44,12 @@ namespace Tambola.Pages
             }
             _players.Sort();
 
+        }
+        public void AddPlayer(string name, PlayerTicket playerTicket)
+        {
+            _players.Add(name); 
+            playerTickets.Add(name, new PlayerTicket(playerTicket));
+            _players.Sort();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿@using Tambola.Services
+﻿@using Tambola.Models
+@using Tambola.Services
 @page "/"
 
-<AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked" savePressed="() => PlayerTickets.statechanged()">
-    
+<AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked" savePressed="(Tuple<string,PlayerTicket> tuple) => PlayerTickets.statechanged(tuple)">
 </AddPlayer>
 <div class="navBar ">
     <span style="margin-left:30px;font-size:large;"><b>Tambola</b></span>

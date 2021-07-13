@@ -34,5 +34,9 @@ namespace Tambola.Pages
             isWinnersSelected = true;
             isPlayersSelected = false;
         }
+        private void clear()
+        {
+            PlayerTickets.clear();
+        }
     }
 }

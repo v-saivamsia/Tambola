@@ -51,5 +51,14 @@ namespace Tambola.Pages
             playerTickets.Add(name, new PlayerTicket(playerTicket));
             _players.Sort();
         }
+        public void clear()
+        {
+            selectedPlayer = "";
+            _players.Clear();
+            playerTickets.Clear();
+            playerTickets.Add("", new PlayerTicket());
+            localStorage.ClearAsync();
+            _bodyTemplate.statechanged();
+        }
     }
 }

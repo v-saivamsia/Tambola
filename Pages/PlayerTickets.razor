@@ -2,7 +2,7 @@
     <sideBody>
         @foreach(var name in _players)
         {
-            <FullButton buttonPressed="@(()=>playerSelected(name))">@name</FullButton>
+            <FullButton buttonPressed="@(()=>playerSelected(name))" isSelected=@(selectedPlayer.Equals(name))>@name</FullButton>
         }
     </sideBody>    
     <mainBody>

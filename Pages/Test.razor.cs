@@ -8,6 +8,9 @@ namespace Tambola.Pages
     public partial class Test
     {
         private bool showTickets = false;
+        private bool isPlayersSelected = true;
+        private bool isWinnersSelected = false;
+        private PlayerTickets PlayerTickets;
         private void btnClicked()
         {
             showTickets = true;
@@ -20,6 +23,16 @@ namespace Tambola.Pages
                 showTickets = false;
                 StateHasChanged();
             }
+        }
+        private void playersSelected()
+        {
+            isPlayersSelected = true;
+            isWinnersSelected = false;
+        }
+        private void winnersSelected()
+        {
+            isWinnersSelected = true;
+            isPlayersSelected = false;
         }
     }
 }

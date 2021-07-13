@@ -1,22 +1,41 @@
 ﻿@using Tambola.Services
 @page "/"
 
-<AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked"></AddPlayer>
-<div class="container">
-    <div class="navBar container-navbar">
-        <span style="margin-left:30px;font-size:large;"><b>Tambola</b></span>    
-        <div style="margin-right:30px;">
-        <button class="button button-primary" @onclick="btnClicked">Add player</button> 
-        </div>
-    </div>
-    <div class="container-sidebar">
-        <FullButton>All Players</FullButton>
-        <FullButton>Winners</FullButton>
-        <FullButton Class="clear-data">Clear data</FullButton>
-    </div>
-    <div class="container-mainbody">
-            
-
+<AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked" savePressed="() => PlayerTickets.statechanged()">
+    
+</AddPlayer>
+<div class="navBar ">
+    <span style="margin-left:30px;font-size:large;"><b>Tambola</b></span>
+    <div style="margin-right:30px;">
+        <button class="button button-primary" @onclick="btnClicked">Add player</button>
     </div>
 </div>
 
+<div class="body">
+    <BodyTemplate>
+        <sideBody>
+            <FullButton isSelected=isPlayersSelected buttonPressed="playersSelected">
+                All Players
+            </FullButton>
+            <FullButton isSelected=isWinnersSelected buttonPressed="winnersSelected">
+                Winners
+            </FullButton>
+            <FullButton Class="clear-data">Clear data</FullButton>
+        </sideBody>
+        <mainBody>
+            @if (isPlayersSelected)
+            {
+            <PlayerTickets @ref="PlayerTickets"></PlayerTickets>
+            }
+            else if(isWinnersSelected)
+            {
+            <div>hiiiiiiiii</div>
+            }
+            else
+            {
+            <div>Welcome to Tambola</div>
+            }
+
+        </mainBody>
+    </BodyTemplate>
+</div>

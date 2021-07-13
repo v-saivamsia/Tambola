@@ -31,6 +31,7 @@ namespace Tambola.Models
                     TicketArray[i,j++] = num;
                 }
                 i++;
+                j = 0;
             }
         }
         public static implicit operator string(Ticket ticket)

@@ -13,6 +13,9 @@ namespace Tambola.Pages
     {
         [Parameter]
         public int NumberOfTickets { get; set; } = 1;
+        [Parameter]
+        public bool isFullHeight { get; set; } = false;
+
         [Inject]
         private ILocalStorageService localStorage { get; set; }
 
@@ -37,6 +40,11 @@ namespace Tambola.Pages
                 tickets = ticketManager
             };
             localStorage.SetItemAsync<PlayerTicket>(name,playerTicket);
+        }
+        public void setTicketManagerExternal(PlayerTicket playerTicket)
+        {
+            ticketManager = new TicketManager(playerTicket);
+            StateHasChanged();
         }
     }
 }

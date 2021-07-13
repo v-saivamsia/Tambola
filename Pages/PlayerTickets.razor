@@ -1,0 +1,12 @@
+﻿<BodyTemplate @ref=_bodyTemplate>
+    <sideBody>
+        @foreach(var name in _players)
+        {
+            <FullButton buttonPressed="@(()=>playerSelected(name))">@name</FullButton>
+        }
+    </sideBody>    
+    <mainBody>
+        <DisplayTickets @ref="displayTickets" NumberOfTickets=playerTickets[selectedPlayer].numberOftickets isFullHeight=true>
+        </DisplayTickets>
+    </mainBody>
+</BodyTemplate>

@@ -1,15 +1,18 @@
 ﻿div{
     width:100%;
 }
-.button{
+button{
     width:100%;
-    border-radius:0;
+    height: 40px;
+    border:0px solid transparent;
+    border-radius:0px;
     box-shadow:none;
     color:inherit;
     text-align:left;
     padding-left:25px;
+    background-color:inherit;
 }
-.button:hover{
+button:hover{
     background-color:#0769cf;
     color:white;
 }
@@ -21,4 +24,8 @@ div.clear-data > button:hover{
     background-color:#d1061f;
     color:white;
 }
-
+.is-selected{background:inherit;}
+div.is-selected > button{
+    background-color:#6a6a6a;
+    color:white;
+}

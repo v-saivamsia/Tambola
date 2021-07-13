@@ -8,6 +8,15 @@ namespace Tambola.Models
     public class PlayerTicket
     {
         public List<string> tickets { get; set; }
-        public int numberOftickets { get; set; }
+        public int numberOftickets { get; set; } = 0;
+        public PlayerTicket()
+        {
+
+        }
+        public PlayerTicket(PlayerTicket playerTicket)
+        {
+            numberOftickets = playerTicket.numberOftickets;
+            tickets = new List<string>(playerTicket.tickets);
+        }
     }
 }

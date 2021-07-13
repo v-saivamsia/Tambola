@@ -49,8 +49,13 @@ namespace Tambola.Services
                 }
             }
         }
-
-        public static implicit operator List<string> (TicketManager ticketManager)
+        public TicketManager(PlayerTicket playerTicket)
+        {
+            Tickets = new Ticket[6];
+            for (int i = 0; i < 6; i++)
+                Tickets[i] = new Ticket(playerTicket.tickets[i]); ;
+        }
+        public static implicit operator List<string>(TicketManager ticketManager)
         {
             List<string> result = new List<string>();
             for (int i = 0; i < 6; i++) result.Add(ticketManager.Tickets[i]);
@@ -148,7 +153,7 @@ namespace Tambola.Services
         {
             bool isPermutedWell = false;
             int count = 0;
-            while (!isPermutedWell && count<5)
+            while (!isPermutedWell && count < 5)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -157,7 +162,7 @@ namespace Tambola.Services
                         shuffleTicket(ticketNumber, i % 3);
                     }
                 }
-                isPermutedWell = !(checkContinuity(ticketNumber,0) || checkContinuity(ticketNumber,1) || checkContinuity(ticketNumber,2));
+                isPermutedWell = !(checkContinuity(ticketNumber, 0) || checkContinuity(ticketNumber, 1) || checkContinuity(ticketNumber, 2));
                 count++;
             }
 

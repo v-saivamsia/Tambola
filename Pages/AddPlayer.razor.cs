@@ -15,6 +15,8 @@ namespace Tambola.Pages
 
         [Parameter]
         public bool showTickets { get; set; } = false;
+        [Parameter]
+        public EventCallback savePressed { get; set; }
         private string showPanel = "";
         private async Task closeTicketsPanel()
         {
@@ -48,6 +50,7 @@ namespace Tambola.Pages
         {
             displayTickets.saveTickets(player.Name);
             // display pop up saved tickets of the player
+            savePressed.InvokeAsync();
             reset();
         }
     }

@@ -2,6 +2,10 @@
 @using Tambola.Services
 @page "/"
 
+<Modal yesPressed="clear" noPressed="closeModal" visibility=isModalVisible>
+    Are you sure, you want to clear all the data?
+</Modal>
+
 <AddPlayer showTickets="showTickets" showTicketsPanel="closeButtonInChildClicked" savePressed="(Tuple<string,PlayerTicket> tuple) => PlayerTickets.statechanged(tuple)">
 </AddPlayer>
 <div class="navBar ">
@@ -20,7 +24,7 @@
             <FullButton isSelected=isWinnersSelected buttonPressed="winnersSelected">
                 Winners
             </FullButton>
-            <FullButton Class="clear-data" buttonPressed="clear">Clear data</FullButton>
+            <FullButton Class="clear-data" buttonPressed="showModal">Clear data</FullButton>
         </sideBody>
         <mainBody>
             @if (isPlayersSelected)

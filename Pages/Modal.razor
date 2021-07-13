@@ -1,0 +1,31 @@
+﻿@page "/modal"
+<div class="container @(visibility?"visibile":"")">
+    <div class="modal-background"></div>
+    <div class="modal">
+        <div class="content display-flex justify-content-center">
+            @ChildContent
+        </div>    
+        <div class="buttons">
+            <button type="button" class="button button-primary" @onclick="yes">Confirm</button>
+            <button type="button" class="button button-primary" @onclick="no">Cancel</button>
+        </div>    
+    </div>
+</div>
+@code{
+    [Parameter]
+    public bool visibility { get; set; } = false;
+    [Parameter]
+    public RenderFragment ChildContent{ get; set; }
+    [Parameter]
+    public EventCallback yesPressed{ get; set; }
+    [Parameter]
+    public EventCallback noPressed{ get; set; }
+    private void yes()
+    {
+        yesPressed.InvokeAsync();
+    }
+    private void no()
+    {
+        noPressed.InvokeAsync();
+    }
+}

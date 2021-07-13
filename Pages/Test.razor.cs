@@ -7,6 +7,7 @@ namespace Tambola.Pages
 {
     public partial class Test
     {
+        private bool isModalVisible = false;
         private bool showTickets = false;
         private bool isPlayersSelected = true;
         private bool isWinnersSelected = false;
@@ -37,6 +38,9 @@ namespace Tambola.Pages
         private void clear()
         {
             PlayerTickets.clear();
+            isModalVisible = false;
         }
+        private void showModal() { isModalVisible = true; }
+        private void closeModal() { isModalVisible = false;}
     }
 }

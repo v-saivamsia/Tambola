@@ -22,6 +22,8 @@ namespace Tambola
 
             // custom services
             builder.Services.AddTransient<TicketFactory>();
+            builder.Services.AddSingleton<NotificationService>();
+            builder.Services.AddSingleton<ComponentService>();
 
             // third party services
             builder.Services.AddBlazoredLocalStorage();

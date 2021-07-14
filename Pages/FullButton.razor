@@ -1,5 +1,5 @@
-﻿<div class="@Class @(isSelected ? "is-selected":"")">
-    <button class="utton" @onclick="buttonClicked">@ChildContent</button>
+﻿<div class="@Class @(isSelected ? "is-selected":"") ">
+    <button @onclick="buttonClicked">@ChildContent</button>
 </div>
 @code {
     [Parameter]

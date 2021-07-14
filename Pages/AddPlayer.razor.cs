@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tambola.Models;
+using Tambola.Services;
 
 namespace Tambola.Pages
 {
@@ -17,6 +18,8 @@ namespace Tambola.Pages
         public bool showTickets { get; set; } = false;
         [Parameter]
         public EventCallback<Tuple<string,PlayerTicket>> savePressed { get; set; }
+        [Inject]
+        public ComponentService componentService { get; set; }
         private string showPanel = "";
         private async Task closeTicketsPanel()
         {
@@ -46,12 +49,15 @@ namespace Tambola.Pages
         {
             displayTickets.setTicketManager();
         }
-        private void saveTickets()
+        private async Task saveTickets()
         {
             displayTickets.saveTickets(player.Name);
             // display pop up saved tickets of the player
-            savePressed.InvokeAsync(new Tuple<string, PlayerTicket>(player.Name,new PlayerTicket(displayTickets.playerTicket)));
+            await savePressed.InvokeAsync(new Tuple<string, PlayerTicket>(player.Name,new PlayerTicket(displayTickets.playerTicket)));
+
+            componentService.playerTickets.playerSelected(player.Name);
             reset();
+            await closeTicketsPanel();
         }
     }
 }

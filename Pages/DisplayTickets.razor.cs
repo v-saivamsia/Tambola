@@ -47,5 +47,13 @@ namespace Tambola.Pages
             ticketManager = new TicketManager(playerTicket);
             StateHasChanged();
         }
+        private void deletePlayer()
+        {
+
+        }
+        private void markWinner()
+        {
+
+        }
     }
 }

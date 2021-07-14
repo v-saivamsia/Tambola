@@ -1,18 +1,30 @@
 ﻿<div class="overflow-scroll @(isFullHeight?"full-height":"")">
-<h3 style="text-align:center">Tickets</h3>
-    
-@if(ticketManager != null){
-    for(int i = 0; i < NumberOfTickets; i++)
+    @if (isFullHeight)
     {
-        <div class="ticket">
-            @for(int j = 0; j < 3; j++)
-            {
-                for(int k = 0; k < 9; k++)
-                {
-                    <Cell number=ticketManager.Tickets[i].TicketArray[j,k]/>
-                }
-            }
+        <div class="navBar navBar-displayTickets">
+            <div style="height:100%;display:flex;">
+                <FullButton Class="navBar-button">Add ticket</FullButton>
+                <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
+            </div>
+            <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
         </div>
     }
-}
+    <h3 style="text-align:center">Tickets</h3>
+
+    @if (ticketManager != null)
+    {
+        for (int i = 0; i < NumberOfTickets; i++)
+        {
+            <h5 class="textAlignCenter">Ticket #@(i+1)</h5>
+            <div class="ticket">
+                @for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 9; k++)
+                    {
+                        <Cell number=ticketManager.Tickets[i].TicketArray[j,k] />
+                    }
+                }
+            </div>
+        }
+    }
 </div>

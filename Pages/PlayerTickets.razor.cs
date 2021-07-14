@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tambola.Models;
+using Tambola.Services;
 
 namespace Tambola.Pages
 {
@@ -17,12 +18,15 @@ namespace Tambola.Pages
         private Dictionary<string, PlayerTicket> playerTickets = new Dictionary<string, PlayerTicket>() { { "", new PlayerTicket() } };
         [Inject]
         public ILocalStorageService localStorage { get; set; }
+        [Inject]
+        public ComponentService componentService { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await getPlayerNames();
             await base.OnInitializedAsync();
+            componentService.playerTickets = this;
         }
-        private void playerSelected(string name)
+        public void playerSelected(string name)
         {
             selectedPlayer = name;
             displayTickets.setTicketManagerExternal(playerTickets[name]);

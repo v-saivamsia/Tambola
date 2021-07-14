@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tambola.Services;
 
 namespace Tambola.Pages
 {
@@ -12,6 +14,11 @@ namespace Tambola.Pages
         private bool isPlayersSelected = true;
         private bool isWinnersSelected = false;
         private PlayerTickets PlayerTickets;
+        protected override Task OnInitializedAsync()
+        {
+            return base.OnInitializedAsync();
+        }
+        public void statehaschanged() { StateHasChanged();}
         private void btnClicked()
         {
             showTickets = true;
@@ -42,5 +49,6 @@ namespace Tambola.Pages
         }
         private void showModal() { isModalVisible = true; }
         private void closeModal() { isModalVisible = false;}
+        public void publicshowModal() { isModalVisible = true;}
     }
 }

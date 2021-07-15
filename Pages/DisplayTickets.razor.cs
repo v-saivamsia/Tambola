@@ -55,5 +55,13 @@ namespace Tambola.Pages
         {
 
         }
+        private void AddTicket()
+        {
+            NumberOfTickets++;
+        }
+        private void DeleteTicket()
+        {
+            NumberOfTickets--;
+        }
     }
 }

@@ -3,8 +3,15 @@
     {
         <div class="navBar navBar-displayTickets">
             <div style="height:100%;display:flex;">
-                <FullButton Class="navBar-button">Add ticket</FullButton>
                 <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
+                @if (NumberOfTickets < 6)
+                {
+                <FullButton Class="navBar-button" buttonPressed="AddTicket">Add ticket</FullButton>
+                }
+                @if (NumberOfTickets > 1)
+                {
+                <FullButton Class="navBar-button" buttonPressed="DeleteTicket">Delete ticket</FullButton>
+                }
             </div>
             <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
         </div>

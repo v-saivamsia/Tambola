@@ -6,18 +6,17 @@
                 <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
                 @if (NumberOfTickets < 6)
                 {
-                <FullButton Class="navBar-button" buttonPressed="AddTicket">Add ticket</FullButton>
+                    <FullButton Class="navBar-button" buttonPressed="AddTicket">Add ticket</FullButton>
                 }
                 @if (NumberOfTickets > 1)
                 {
-                <FullButton Class="navBar-button" buttonPressed="DeleteTicket">Delete ticket</FullButton>
+                    <FullButton Class="navBar-button" buttonPressed="DeleteTicket">Delete ticket</FullButton>
                 }
             </div>
             <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
         </div>
     }
     <h3 style="text-align:center">Tickets</h3>
-
     @if (ticketManager != null)
     {
         for (int i = 0; i < NumberOfTickets; i++)

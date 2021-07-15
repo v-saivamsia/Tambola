@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <div class="sidebar">@sideBody</div>
+    <div class="sidebar @Class">@sideBody</div>
     <div class="mainbody">@mainBody</div>
 </div>
 @code {
@@ -7,5 +7,7 @@
     public RenderFragment sideBody{ get; set; }
     [Parameter]
     public RenderFragment mainBody{ get; set; }
+    [Parameter]
+    public string Class { get; set; } = "";
     public void statechanged() { StateHasChanged(); }
 }

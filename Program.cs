@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Tambola.Constants;
 using Tambola.Services;
 
 namespace Tambola
@@ -24,6 +25,9 @@ namespace Tambola
             builder.Services.AddTransient<TicketFactory>();
             builder.Services.AddSingleton<NotificationService>();
             builder.Services.AddSingleton<ComponentService>();
+
+            // helper constant classes
+            builder.Services.AddSingleton<AvailableWinningWays>();
 
             // third party services
             builder.Services.AddBlazoredLocalStorage();

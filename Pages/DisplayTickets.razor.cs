@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Tambola.Services;
 using Tambola.Models;
+using Tambola.Constants;
 
 namespace Tambola.Pages
 {
@@ -18,11 +19,14 @@ namespace Tambola.Pages
 
         [Inject]
         private ILocalStorageService localStorage { get; set; }
+        [Inject]
+        private AvailableWinningWays availableWinningWays { get; set; }
 
         [Inject]
         private TicketFactory ticketFactory { get; set; }
         public PlayerTicket playerTicket { get; set; } 
         private TicketManager ticketManager;
+        private bool showWinButtons = false;
         public void setTicketManager()
         {
             ticketManager = ticketFactory.ticketManager;
@@ -55,8 +59,15 @@ namespace Tambola.Pages
         public EventCallback removePlayer { get; set; }
         private void markWinner()
         {
-
+            showWinButtons = !showWinButtons;
         }
+        private void winButtonPressed(string s)
+        {
+            markPlayerAsWinner.InvokeAsync(s);
+            showWinButtons = false;
+        }
+        [Parameter]
+        public EventCallback<string> markPlayerAsWinner { get; set; }
         private void AddTicket()
         {
             NumberOfTickets++;

@@ -15,6 +15,15 @@
             </div>
             <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
         </div>
+        @if (showWinButtons)
+        {
+            <div class="position-absolute" style="width:250px;background:#dfdfdf">
+                @foreach (string s in availableWinningWays.list)
+                {
+                    <FullButton buttonPressed="@(()=>winButtonPressed(s))">@s</FullButton>
+                }
+            </div>
+        }
     }
     <h3 style="text-align:center">Tickets</h3>
     @if (ticketManager != null)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tambola.Constants;
 using Tambola.Models;
 using Tambola.Services;
 
@@ -20,6 +21,10 @@ namespace Tambola.Pages
         public ILocalStorageService localStorage { get; set; }
         [Inject]
         public ComponentService componentService { get; set; }
+        [Inject]
+        public AvailableWinningWays availableWinningWays { get; set; }
+        [Inject]
+        public MarkedWinners markedWinners { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await getPlayerNames();
@@ -46,6 +51,7 @@ namespace Tambola.Pages
                 _players.Add(await localStorage.KeyAsync(i));
                 playerTickets.Add(_players[i], new PlayerTicket(await localStorage.GetItemAsync<PlayerTicket>(_players[i])));
             }
+            _players.Remove("Winners");
             _players.Sort();
 
         }
@@ -71,6 +77,16 @@ namespace Tambola.Pages
             localStorage.RemoveItemAsync(selectedPlayer);
             playerTickets.Remove(selectedPlayer);
             selectedPlayer = "";
+        }
+        private void markPlayerWinner(string s)
+        {
+            int index = availableWinningWays.dictionary[s];
+            if (markedWinners.winners[index].Count >= 2)
+            {
+                return;
+            }
+            markedWinners.winners[index].Add(s);
+            localStorage.SetItemAsync<List<List<string>>>("Winners", markedWinners.winners);
         }
     }
 }

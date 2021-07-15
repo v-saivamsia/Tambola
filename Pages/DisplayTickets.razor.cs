@@ -49,8 +49,10 @@ namespace Tambola.Pages
         }
         private void deletePlayer()
         {
-
+            removePlayer.InvokeAsync();
         }
+        [Parameter]
+        public EventCallback removePlayer { get; set; }
         private void markWinner()
         {
 

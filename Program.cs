@@ -27,7 +27,7 @@ namespace Tambola
             builder.Services.AddSingleton<ComponentService>();
 
             // helper constant classes
-            builder.Services.AddSingleton<AvailableWinningWays>();
+            builder.Services.AddTransient<AvailableWinningWays>();
 
             // third party services
             builder.Services.AddBlazoredLocalStorage();

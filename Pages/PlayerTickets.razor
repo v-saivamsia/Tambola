@@ -6,7 +6,7 @@
         }
     </sideBody>    
     <mainBody>
-        <DisplayTickets @ref="displayTickets" NumberOfTickets=playerTickets[selectedPlayer].numberOftickets isFullHeight=true>
+        <DisplayTickets @ref="displayTickets" NumberOfTickets=playerTickets[selectedPlayer].numberOftickets isFullHeight=true removePlayer="deletePlayer">
         </DisplayTickets>
     </mainBody>
 </BodyTemplate>

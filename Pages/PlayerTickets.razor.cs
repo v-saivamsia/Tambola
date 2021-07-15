@@ -64,5 +64,13 @@ namespace Tambola.Pages
             localStorage.ClearAsync();
             _bodyTemplate.statechanged();
         }
+        private void deletePlayer()
+        {
+            if (selectedPlayer.Equals("")) return;
+            _players.Remove(selectedPlayer);
+            localStorage.RemoveItemAsync(selectedPlayer);
+            playerTickets.Remove(selectedPlayer);
+            selectedPlayer = "";
+        }
     }
 }

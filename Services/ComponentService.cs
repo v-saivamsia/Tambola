@@ -9,6 +9,6 @@ namespace Tambola.Services
     public class ComponentService
     {
         public PlayerTickets playerTickets { get; set; }
-
+        public Winners winners { get; set; }
     }
 }

@@ -44,8 +44,10 @@ namespace Tambola.Pages
         }
         private void clear()
         {
+            isPlayersSelected = true;
             PlayerTickets.clear();
             isModalVisible = false;
+            isPlayersSelected = false;
         }
         private void showModal() { isModalVisible = true; }
         private void closeModal() { isModalVisible = false;}

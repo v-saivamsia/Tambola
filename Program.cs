@@ -25,7 +25,7 @@ namespace Tambola
             builder.Services.AddTransient<TicketFactory>();
             builder.Services.AddSingleton<NotificationService>();
             builder.Services.AddSingleton<ComponentService>();
-            builder.Services.AddTransient<MarkedWinners>();
+            builder.Services.AddScoped<MarkedWinners>();
             // helper constant classes
             builder.Services.AddTransient<AvailableWinningWays>();
 

@@ -10,25 +10,30 @@ namespace Tambola.Services
     public class MarkedWinners
     {
         private readonly ILocalStorageService localStorageService;
-        private readonly AvailableWinningWays availableWinningWays;
+        public readonly AvailableWinningWays availableWinningWays = new AvailableWinningWays();
         public List<List<string>> winners;
-        public MarkedWinners(ILocalStorageService localStorageService,AvailableWinningWays availableWinningWays)
+        public MarkedWinners(ILocalStorageService localStorageService)
         {
             this.localStorageService = localStorageService;
-            this.availableWinningWays = availableWinningWays;
-            Task.Run(async ()=> await GetInitialWinners());
+            Task.Run(async () => await GetInitialWinners());
         }
         private async Task GetInitialWinners()
         {
             winners = await localStorageService.GetItemAsync<List<List<string>>>("Winners");
             if (winners == null)
             {
-                winners = new List<List<string>>();
-                foreach (string s in availableWinningWays.list)
-                {
-                    winners.Add(new List<string>());
-                }
+                GetInitialWinnersHelper(); 
+                await localStorageService.SetItemAsync<List<List<string>>>("Winners", winners);
             }
+        }
+        public void GetInitialWinnersHelper()
+        {
+            winners = new List<List<string>>();
+            foreach (string s in availableWinningWays.list)
+            {
+                winners.Add(new List<string>());
+            }
+
         }
     }
 }

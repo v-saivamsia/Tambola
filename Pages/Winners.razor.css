@@ -1,0 +1,8 @@
+﻿.winner-grid{
+    margin:auto;
+    display:grid;
+    width:min-content;
+    grid-template-columns:repeat(3, 250px);
+    grid-template-rows:repeat(7,60px);
+    place-items:center;
+}

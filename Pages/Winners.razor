@@ -1,0 +1,15 @@
+﻿<h3 class="textAlignCenter">Winners</h3>
+@if (markedWinners.winners != null)
+{    
+<div class="winner-grid">
+    <div>Tambola</div>
+    <div>First Winner</div>
+    <div>Second Winner</div>
+        @foreach(string s in markedWinners.availableWinningWays.list)
+        {
+            <FullButton>@s</FullButton>
+            <div>@getWinner(s,0)</div>
+            <div>@getWinner(s,1)</div>
+        }    
+    </div>
+}

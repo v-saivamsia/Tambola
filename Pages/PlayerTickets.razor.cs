@@ -49,11 +49,14 @@ namespace Tambola.Pages
             for (int i = 0; i < count; i++)
             {
                 _players.Add(await localStorage.KeyAsync(i));
+                if (_players[i].Equals("Winners"))
+                {
+                    continue;
+                }
                 playerTickets.Add(_players[i], new PlayerTicket(await localStorage.GetItemAsync<PlayerTicket>(_players[i])));
             }
             _players.Remove("Winners");
             _players.Sort();
-
         }
         public void AddPlayer(string name, PlayerTicket playerTicket)
         {
@@ -68,6 +71,8 @@ namespace Tambola.Pages
             playerTickets.Clear();
             playerTickets.Add("", new PlayerTicket());
             localStorage.ClearAsync();
+            componentService.winners.markedWinners.GetInitialWinnersHelper();
+            componentService.winners.statehaschanged();
             _bodyTemplate.statechanged();
         }
         private void deletePlayer()
@@ -85,8 +90,9 @@ namespace Tambola.Pages
             {
                 return;
             }
-            markedWinners.winners[index].Add(s);
-            localStorage.SetItemAsync<List<List<string>>>("Winners", markedWinners.winners);
+            componentService.winners.markedWinners.winners[index].Add(selectedPlayer);
+            localStorage.SetItemAsync<List<List<string>>>("Winners",componentService.winners.markedWinners.winners);
+            componentService.winners.statehaschanged();
         }
     }
 }

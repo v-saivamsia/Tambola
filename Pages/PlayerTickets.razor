@@ -1,7 +1,7 @@
 ﻿<BodyTemplate @ref=_bodyTemplate Class="overflow-scroll">
     <sideBody>
         @foreach (var name in _players)
-                {
+        {
         <FullButton buttonPressed="@(()=>playerSelected(name))" isSelected=@(selectedPlayer.Equals(name))>@name</FullButton>
         }
     </sideBody>

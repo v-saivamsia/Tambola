@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace Tambola.Pages
         public AvailableWinningWays availableWinningWays { get; set; }
         [Inject]
         public MarkedWinners markedWinners { get; set; }
+        [Inject]
+        public IJSRuntime jSRuntime { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await getPlayerNames();
@@ -37,9 +40,9 @@ namespace Tambola.Pages
             displayTickets.setTicketManagerExternal(playerTickets[name]);
             StateHasChanged();
         }
-        public void statechanged(Tuple<string,PlayerTicket> tuple)
+        public void statechanged(Tuple<string, PlayerTicket> tuple)
         {
-            AddPlayer(tuple.Item1,tuple.Item2);
+            AddPlayer(tuple.Item1, tuple.Item2);
             _bodyTemplate.statechanged();
         }
         private async Task getPlayerNames()
@@ -60,9 +63,16 @@ namespace Tambola.Pages
         }
         public void AddPlayer(string name, PlayerTicket playerTicket)
         {
-            _players.Add(name); 
-            playerTickets.Add(name, new PlayerTicket(playerTicket));
-            _players.Sort();
+            try
+            {
+                playerTickets.Add(name, new PlayerTicket(playerTicket));
+                _players.Add(name);
+                _players.Sort();
+            }
+            catch (Exception)
+            {
+                Task.Run(async () => await jSRuntime.InvokeVoidAsync("alertfunction","Player already exists!"));
+            }
         }
         public void clear()
         {
@@ -91,7 +101,7 @@ namespace Tambola.Pages
                 return;
             }
             componentService.winners.markedWinners.winners[index].Add(selectedPlayer);
-            localStorage.SetItemAsync<List<List<string>>>("Winners",componentService.winners.markedWinners.winners);
+            localStorage.SetItemAsync<List<List<string>>>("Winners", componentService.winners.markedWinners.winners);
             componentService.winners.statehaschanged();
         }
     }

@@ -11,14 +11,15 @@ namespace Tambola.Pages
     {
         private bool isModalVisible = false;
         private bool showTickets = false;
-        private bool isPlayersSelected = false;
-        private bool isWinnersSelected = true;
+        private bool isPlayersSelected = true;
+        private bool isWinnersSelected = false;
         private PlayerTickets PlayerTickets;
+        private Winners winners;
         protected override Task OnInitializedAsync()
         {
             return base.OnInitializedAsync();
         }
-        public void statehaschanged() { StateHasChanged();}
+        public void statehaschanged() { StateHasChanged(); }
         private void btnClicked()
         {
             showTickets = true;
@@ -44,13 +45,25 @@ namespace Tambola.Pages
         }
         private void clear()
         {
-            isPlayersSelected = true;
-            PlayerTickets.clear();
-            isModalVisible = false;
-            isPlayersSelected = false;
+            try
+            {
+                bool temp1 = isPlayersSelected, temp2 = isWinnersSelected;
+                playersSelected();
+                PlayerTickets.clear();
+                winnersSelected();
+                winners.markedWinners.GetInitialWinnersHelper();
+                winners.statehaschanged();
+                isModalVisible = false;
+                isPlayersSelected = temp1;
+                isWinnersSelected = temp2;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
         private void showModal() { isModalVisible = true; }
-        private void closeModal() { isModalVisible = false;}
-        public void publicshowModal() { isModalVisible = true;}
+        private void closeModal() { isModalVisible = false; }
+        public void publicshowModal() { isModalVisible = true; }
     }
 }

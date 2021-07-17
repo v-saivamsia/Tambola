@@ -10,7 +10,8 @@
                         NumberOfTickets=playerTickets[selectedPlayer].numberOftickets
                         isFullHeight=true
                         removePlayer="deletePlayer"
-                        markPlayerAsWinner="@markPlayerWinner">
+                        markPlayerAsWinner="@markPlayerWinner"
+                        isRealPlayer="@(!selectedPlayer.Equals(""))">
         </DisplayTickets>
     </mainBody>
 </BodyTemplate>

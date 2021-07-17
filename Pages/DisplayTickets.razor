@@ -1,6 +1,8 @@
 ﻿<div class="overflow-scroll @(isFullHeight?"full-height":"")">
     @if (isFullHeight)
     {
+        @if (isRealPlayer)
+        {            
         <div class="navBar navBar-displayTickets">
             <div style="height:100%;display:flex;">
                 <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
@@ -15,6 +17,7 @@
             </div>
             <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
         </div>
+        }
         @if (showWinButtons)
         {
             <div class="position-absolute" style="width:250px;background:#dfdfdf">

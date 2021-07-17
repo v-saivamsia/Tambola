@@ -11,8 +11,8 @@ namespace Tambola.Pages
     {
         private bool isModalVisible = false;
         private bool showTickets = false;
-        private bool isPlayersSelected = true;
-        private bool isWinnersSelected = false;
+        private bool isPlayersSelected = false;
+        private bool isWinnersSelected = true;
         private PlayerTickets PlayerTickets;
         protected override Task OnInitializedAsync()
         {

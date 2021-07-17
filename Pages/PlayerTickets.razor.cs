@@ -81,8 +81,6 @@ namespace Tambola.Pages
             playerTickets.Clear();
             playerTickets.Add("", new PlayerTicket());
             localStorage.ClearAsync();
-            componentService.winners.markedWinners.GetInitialWinnersHelper();
-            componentService.winners.statehaschanged();
             _bodyTemplate.statechanged();
         }
         private void deletePlayer()

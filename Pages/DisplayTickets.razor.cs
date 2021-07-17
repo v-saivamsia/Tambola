@@ -16,8 +16,6 @@ namespace Tambola.Pages
         public int NumberOfTickets { get; set; } = 1;
         [Parameter]
         public bool isFullHeight { get; set; } = false;
-        [Parameter]
-        public bool isRealPlayer { get; set; } = false;
 
         [Inject]
         private ILocalStorageService localStorage { get; set; }

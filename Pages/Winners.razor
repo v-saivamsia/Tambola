@@ -7,7 +7,7 @@
     <div>Second Winner</div>
         @foreach(string s in markedWinners.availableWinningWays.list)
         {
-            <FullButton buttonPressed="@(()=>clearWinner(s))">@s</FullButton>
+            <FullButton>@s</FullButton>
             <div>@getWinner(s,0)</div>
             <div>@getWinner(s,1)</div>
         }    

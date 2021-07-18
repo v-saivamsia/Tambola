@@ -11,7 +11,7 @@ using Tambola.Services;
 
 namespace Tambola.Pages
 {
-    public partial class PlayerTickets
+    public partial class PlayerTickets : IDisposable
     {
         private BodyTemplate _bodyTemplate;
         private string selectedPlayer = "";
@@ -27,12 +27,19 @@ namespace Tambola.Pages
         [Inject]
         public MarkedWinners markedWinners { get; set; }
         [Inject]
+        public NotificationService notificationService { get; set; }
+        [Inject]
         public IJSRuntime jSRuntime { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await getPlayerNames();
             await base.OnInitializedAsync();
             componentService.playerTickets = this;
+            notificationService.Notify += clear;
+        }
+        public void Dispose()
+        {
+            notificationService.Notify -= clear;
         }
         public void playerSelected(string name)
         {
@@ -71,17 +78,19 @@ namespace Tambola.Pages
             }
             catch (Exception)
             {
-                Task.Run(async () => await jSRuntime.InvokeVoidAsync("alertfunction","Player already exists!"));
+                Task.Run(async () => await jSRuntime.InvokeVoidAsync("alertfunction", "Player already exists!"));
             }
         }
-        public void clear()
+        public async Task clear()
         {
-            selectedPlayer = "";
-            _players.Clear();
-            playerTickets.Clear();
-            playerTickets.Add("", new PlayerTicket());
-            localStorage.ClearAsync();
-            _bodyTemplate.statechanged();
+            await InvokeAsync(() =>
+            {
+                selectedPlayer = "";
+                _players.Clear();
+                playerTickets.Clear();
+                playerTickets.Add("", new PlayerTicket());
+                _bodyTemplate.statechanged();
+            });
         }
         private void deletePlayer()
         {
@@ -94,13 +103,12 @@ namespace Tambola.Pages
         private void markPlayerWinner(string s)
         {
             int index = availableWinningWays.dictionary[s];
-            if (markedWinners.winners[index].Count >= 2)
+            if (markedWinners.winners[index].Count < 2)
             {
-                return;
+                markedWinners.winners[index].Add(selectedPlayer);
+                localStorage.SetItemAsync<List<List<string>>>("Winners", markedWinners.winners);
             }
-            componentService.winners.markedWinners.winners[index].Add(selectedPlayer);
-            localStorage.SetItemAsync<List<List<string>>>("Winners", componentService.winners.markedWinners.winners);
-            componentService.winners.statehaschanged();
+
         }
     }
 }

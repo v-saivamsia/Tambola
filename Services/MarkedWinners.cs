@@ -22,11 +22,11 @@ namespace Tambola.Services
             winners = await localStorageService.GetItemAsync<List<List<string>>>("Winners");
             if (winners == null)
             {
-                GetInitialWinnersHelper(); 
+                await GetInitialWinnersHelper(); 
                 await localStorageService.SetItemAsync<List<List<string>>>("Winners", winners);
             }
         }
-        public void GetInitialWinnersHelper()
+        public Task GetInitialWinnersHelper()
         {
             winners = new List<List<string>>();
             foreach (string s in availableWinningWays.list)
@@ -34,6 +34,7 @@ namespace Tambola.Services
                 winners.Add(new List<string>());
             }
 
+            return Task.CompletedTask;
         }
     }
 }

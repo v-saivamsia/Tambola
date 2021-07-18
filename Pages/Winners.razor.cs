@@ -9,7 +9,7 @@ using Tambola.Services;
 
 namespace Tambola.Pages
 {
-    public partial class Winners
+    public partial class Winners : IDisposable
     {
         [Inject]
         public IJSRuntime jsRuntime { get; set; }
@@ -19,16 +19,28 @@ namespace Tambola.Pages
         public MarkedWinners markedWinners { get; set; }
         [Inject]
         public ComponentService ComponentService { get; set; }
+        [Inject]
+        public NotificationService notificationService { get; set; }
         protected override async Task OnInitializedAsync()
         {
             ComponentService.winners = this;
             await base.OnInitializedAsync();
+            notificationService.Notify += clear;
         }
-        private string getWinner(string s,int index)
+
+        private async Task clear()
+        {
+            await InvokeAsync(async () =>
+            {
+                await markedWinners.GetInitialWinnersHelper();
+                StateHasChanged();
+            });
+        }
+        private string getWinner(string s, int index)
         {
             List<string> winners = markedWinners.winners[markedWinners.availableWinningWays.dictionary[s]];
             int count = winners.Count;
-            if(count>index) return winners[index];
+            if (count > index) return winners[index];
             return "No winner yet";
         }
         public void statehaschanged() { StateHasChanged(); }
@@ -39,8 +51,13 @@ namespace Tambola.Pages
             {
                 markedWinners.winners[markedWinners.availableWinningWays.dictionary[s]].Clear();
                 statehaschanged();
-                await localStorage.SetItemAsync<List<List<string>>>("Winners",markedWinners.winners);
+                await localStorage.SetItemAsync<List<List<string>>>("Winners", markedWinners.winners);
             }
+        }
+
+        public void Dispose()
+        {
+            notificationService.Notify -= clear;
         }
     }
 }

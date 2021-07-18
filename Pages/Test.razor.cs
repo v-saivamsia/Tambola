@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace Tambola.Pages
         private bool isWinnersSelected = false;
         private PlayerTickets PlayerTickets;
         private Winners winners;
+        [Inject]
+        public NotificationService notificationService { get; set; }
+        [Inject]
+        public ILocalStorageService localStorage { get; set; }
         protected override Task OnInitializedAsync()
         {
             return base.OnInitializedAsync();
@@ -43,24 +48,11 @@ namespace Tambola.Pages
             isWinnersSelected = true;
             isPlayersSelected = false;
         }
-        private void clear()
+        private async Task clear()
         {
-            try
-            {
-                bool temp1 = isPlayersSelected, temp2 = isWinnersSelected;
-                playersSelected();
-                PlayerTickets.clear();
-                winnersSelected();
-                winners.markedWinners.GetInitialWinnersHelper();
-                winners.statehaschanged();
-                isModalVisible = false;
-                isPlayersSelected = temp1;
-                isWinnersSelected = temp2;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            await localStorage.ClearAsync();
+            await notificationService.Update();
+            closeModal();
         }
         private void showModal() { isModalVisible = true; }
         private void closeModal() { isModalVisible = false; }

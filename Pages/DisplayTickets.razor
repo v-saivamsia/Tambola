@@ -2,21 +2,22 @@
     @if (isFullHeight)
     {
         @if (isRealPlayer)
-        {            
-        <div class="navBar navBar-displayTickets">
-            <div style="height:100%;display:flex;">
-                <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
-                @if (NumberOfTickets < 6)
-                {
-                    <FullButton Class="navBar-button" buttonPressed="AddTicket">Add ticket</FullButton>
-                }
-                @if (NumberOfTickets > 1)
-                {
-                    <FullButton Class="navBar-button" buttonPressed="DeleteTicket">Delete ticket</FullButton>
-                }
+        {
+            <div class="navBar navBar-displayTickets">
+                <div style="height:100%;display:flex;">
+                    <FullButton Class="navBar-button" buttonPressed="markWinner">Mark player as winner</FullButton>
+                    <FullButton Class="navBar-button" buttonPressed="@(()=>copyTickets("tickets"))">Copy tickets</FullButton>
+                    @if (NumberOfTickets < 6)
+                    {
+                        <FullButton Class="navBar-button" buttonPressed="AddTicket">Add ticket</FullButton>
+                    }
+                    @if (NumberOfTickets > 1)
+                    {
+                        <FullButton Class="navBar-button" buttonPressed="DeleteTicket">Delete ticket</FullButton>
+                    }
+                </div>
+                <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
             </div>
-            <FullButton Class="navBar-button clear-data" buttonPressed="deletePlayer">Delete player</FullButton>
-        </div>
         }
         @if (showWinButtons)
         {
@@ -31,18 +32,25 @@
     <h3 style="text-align:center">Tickets</h3>
     @if (ticketManager != null)
     {
-        for (int i = 0; i < NumberOfTickets; i++)
+    <div id="tickets">
+        @for (int i = 0; i < NumberOfTickets; i++)
         {
-            <h5 class="textAlignCenter">Ticket #@(i+1)</h5>
-            <div class="ticket">
+        <h5 class="textAlignCenter">Ticket #@(i+1)</h5>
+        <table cellspacing="0" cellpadding="0" class="margin-auto" >
+            <tbody>
                 @for (int j = 0; j < 3; j++)
                 {
-                    for (int k = 0; k < 9; k++)
-                    {
-                        <Cell number=ticketManager.Tickets[i].TicketArray[j,k] />
-                    }
+                    <tr>
+                        @for (int k = 0; k < 9; k++)
+                        {
+                            @:@{int? temp = ticketManager.Tickets[i].TicketArray[j, k]; }
+                            <td style="background:@(temp.HasValue?"greenyellow":"white")">@(temp.HasValue?temp:"")</td>
+                        }
+                    </tr>
                 }
-            </div>
+            </tbody>
+        </table>
         }
+    </div>
     }
 </div>

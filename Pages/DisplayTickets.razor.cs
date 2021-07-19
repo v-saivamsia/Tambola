@@ -7,6 +7,7 @@ using Blazored.LocalStorage;
 using Tambola.Services;
 using Tambola.Models;
 using Tambola.Constants;
+using Microsoft.JSInterop;
 
 namespace Tambola.Pages
 {
@@ -18,7 +19,8 @@ namespace Tambola.Pages
         public bool isFullHeight { get; set; } = false;
         [Parameter]
         public bool isRealPlayer { get; set; } = false;
-
+        [Inject]
+        private IJSRuntime jSRuntime { get; set; }
         [Inject]
         private ILocalStorageService localStorage { get; set; }
         [Inject]
@@ -77,6 +79,10 @@ namespace Tambola.Pages
         private void DeleteTicket()
         {
             NumberOfTickets--;
+        }
+        private async Task copyTickets(string id)
+        {
+            await jSRuntime.InvokeVoidAsync("copyTickets", id);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Tambola.Pages
         public ILocalStorageService localStorage { get; set; }
         [Inject]
         public MarkedWinners markedWinners { get; set; }
+        [Inject]private NumberPickerManager numberPickerManager { get; set; }
         protected override Task OnInitializedAsync()
         {
             return base.OnInitializedAsync();

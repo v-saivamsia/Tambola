@@ -1,5 +1,17 @@
-﻿<h3>NumberPicker</h3>
-
-@code {
-
-}
+﻿<div class="display-flex justify-content-around" style="margin-top:10px;">
+    <div style="height:inherit;display:flex;flex-direction:column;justify-content:space-between">
+        <div style="transform:translateY(200px)">
+            <div class="currentNumber">@(currentPickedNumber.HasValue?currentPickedNumber:"")</div>
+            <button class="button button-primary width100" @onclick="pickNumber">Pick next</button>
+        </div>
+        <div style="margin-bottom:20px;">
+        <button class="button button-primary width100" @onclick="shouldClear">Clear</button>
+        </div>
+    </div>
+    <div class="grid">
+        @foreach(int num in allNumbers)
+        {
+            <PickedNumberCell isPicked="@isPickedNumber[num]">@num</PickedNumberCell>
+        }
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿.grid{
+    width:fit-content;
+    display:grid;
+    grid-template-rows: repeat(9,50px);
+    grid-template-columns: repeat(10,50px);
+    grid-gap:10px;
+}
+.currentNumber{
+    margin-bottom:10px;
+    width:6rem;
+    height:6rem;
+    text-align:center;
+    border:1px solid black;
+    background:#96fefe;
+    font-size:5rem;
+    border-radius:10px;
+}
+.width100{
+    width:100%;
+}

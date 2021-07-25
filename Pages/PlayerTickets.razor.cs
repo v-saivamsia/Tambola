@@ -59,13 +59,14 @@ namespace Tambola.Pages
             for (int i = 0; i < count; i++)
             {
                 _players.Add(await localStorage.KeyAsync(i));
-                if (_players[i].Equals("Winners"))
+                if (_players[i].Equals("Winners")||_players[i].Equals("PickedNumbers"))
                 {
                     continue;
                 }
                 playerTickets.Add(_players[i], new PlayerTicket(await localStorage.GetItemAsync<PlayerTicket>(_players[i])));
             }
             _players.Remove("Winners");
+            _players.Remove("PickedNumbers");
             _players.Sort();
         }
         public void AddPlayer(string name, PlayerTicket playerTicket)

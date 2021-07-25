@@ -120,6 +120,9 @@ a, .btn-link {
 .justify-content-left{
     justify-content:flex-start;
 }
+.align-items-center{
+    align-items:center;
+}
 .margin-auto{
     margin:auto;
 }

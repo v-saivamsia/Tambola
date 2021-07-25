@@ -26,6 +26,7 @@ namespace Tambola
             builder.Services.AddSingleton<NotificationService>();
             builder.Services.AddSingleton<ComponentService>();
             builder.Services.AddScoped<MarkedWinners>(provider => new MarkedWinners(provider.GetService<ILocalStorageService>()));
+            builder.Services.AddScoped<NumberPickerManager>(sp => new NumberPickerManager(sp.GetService<ILocalStorageService>()));
             // helper constant classes
             builder.Services.AddTransient<AvailableWinningWays>();
 

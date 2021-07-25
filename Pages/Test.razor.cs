@@ -14,12 +14,15 @@ namespace Tambola.Pages
         private bool showTickets = false;
         private bool isPlayersSelected = true;
         private bool isWinnersSelected = false;
+        private bool isNumbersSelected = false;
         private PlayerTickets PlayerTickets;
         private Winners winners;
         [Inject]
         public NotificationService notificationService { get; set; }
         [Inject]
         public ILocalStorageService localStorage { get; set; }
+        [Inject]
+        public MarkedWinners markedWinners { get; set; }
         protected override Task OnInitializedAsync()
         {
             return base.OnInitializedAsync();
@@ -35,23 +38,31 @@ namespace Tambola.Pages
             if (isClosed)
             {
                 showTickets = false;
-                StateHasChanged();
             }
         }
         private void playersSelected()
         {
             isPlayersSelected = true;
             isWinnersSelected = false;
+            isNumbersSelected = false;
         }
         private void winnersSelected()
         {
             isWinnersSelected = true;
             isPlayersSelected = false;
+            isNumbersSelected = false;
+        }
+        private void numbersSelected()
+        {
+            isWinnersSelected = false;
+            isPlayersSelected = false;
+            isNumbersSelected = true;
         }
         private async Task clear()
         {
             await localStorage.ClearAsync();
             await notificationService.Update();
+            await markedWinners.GetInitialWinnersHelper();
             closeModal();
         }
         private void showModal() { isModalVisible = true; }

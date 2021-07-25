@@ -50,7 +50,6 @@ namespace Tambola.Pages
             if (isCleared)
             {
                 markedWinners.winners[markedWinners.availableWinningWays.dictionary[s]].Clear();
-                statehaschanged();
                 await localStorage.SetItemAsync<List<List<string>>>("Winners", markedWinners.winners);
             }
         }

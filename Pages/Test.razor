@@ -24,6 +24,9 @@
             <FullButton isSelected=isWinnersSelected buttonPressed="winnersSelected">
                 Winners
             </FullButton>
+            <FullButton isSelected=isNumbersSelected buttonPressed="numbersSelected">
+                Number Picker
+            </FullButton>
             <FullButton Class="clear-data" buttonPressed="showModal">Clear data</FullButton>
         </sideBody>
         <mainBody>
@@ -34,6 +37,10 @@
             else if(isWinnersSelected)
             {
                 <Winners @ref=winners></Winners>
+            }
+            else if (isNumbersSelected)
+            {
+                <NumberPicker></NumberPicker>
             }
             else
             {
